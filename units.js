@@ -1,6 +1,6 @@
 const units = {
-    LightFootman: {
-        name: 'Light infrantry',
+    Lightinfrantry: {
+        name: 'Light Infantry',
         description: 'Light infantry using javelins.',
         hp: 50,
         maxHp: 50,
@@ -13,7 +13,8 @@ const units = {
         ammo: 20,
         morale: 60,
         maxMorale: 60,
-        orders: 'skirmish'
+        orders: 'skirmish',
+        category: 'Infantry'
     },
     Footman: {
         name: 'Footman',
@@ -21,7 +22,7 @@ const units = {
         hp: 60,
         maxHp: 60,
         damage: [1, 6], // d6 damage
-        apdamage: 0,
+        apdamage: 1,
         armor: 2,
         speed: 1,
         cost: 10,
@@ -29,11 +30,46 @@ const units = {
         ammo: 0,
         morale: 90,
         maxMorale: 90,
-        orders: 'defend'
+        orders: 'defend',
+        category: 'Infantry'
+    },
+    Panzerman: {
+        name: 'Armored Footman',
+        description: 'Heavy armored infantry unit. Endures damage at cost of speed.',
+        hp: 75,
+        maxHp: 75,
+        damage: [1, 6], // d6 damage
+        apdamage: 1,
+        armor: 5,
+        speed: 0.5,
+        cost: 30,
+        range: 1,
+        ammo: 0,
+        morale: 110,
+        maxMorale: 110,
+        orders: 'attack',
+        category: 'Infantry'
+    },
+    Berserk: {
+        name: 'Berserk',
+        description: 'Shock unit, low armor, high speed, and very good damage.',
+        hp: 75,
+        maxHp: 75,
+        damage: [2, 12], // d6 damage
+        apdamage: 2,
+        armor: 1,
+        speed: 1.5,
+        cost: 30,
+        range: 2,
+        ammo: 0,
+        morale: 150,
+        maxMorale: 150,
+        orders: 'attack',
+        category: 'Infantry'
     },
     Archer: {
         name: 'Archer',
-        description: 'Can shoot from a distance.',
+        description: 'Can shoot from a distance. Good ammo reserves, low damage.',
         hp: 45,
         maxHp: 45,
         damage: [1, 3], // d3 damage
@@ -42,10 +78,62 @@ const units = {
         speed: 1.25,
         cost: 25,
         range: 100,
-        ammo: 100,
+        ammo: 80,
         morale: 45,
         maxMorale: 45,
-        orders: 'skirmish'
+        orders: 'skirmish',
+        category: 'Range'
+    },
+    Crossbowman: {
+        name: 'Crossbowman',
+        description: 'Can shoot from a distance. Good armor piercing damage.',
+        hp: 55,
+        maxHp: 55,
+        damage: [1, 4], // d3 damage
+        apdamage: 2,
+        armor: 1,
+        speed: 1,
+        cost: 35,
+        range: 80,
+        ammo: 60,
+        morale: 55,
+        maxMorale: 55,
+        orders: 'skirmish',
+        category: 'Range'
+    },
+    Arquebusier: {
+        name: 'Arquebusier',
+        description: 'Can shoot from a distance. Low ammo, high damage.',
+        hp: 55,
+        maxHp: 55,
+        damage: [2, 6], // 2d3 damage
+        apdamage: 5,
+        armor: 2,
+        speed: 1,
+        cost: 50,
+        range: 60,
+        ammo: 30,
+        morale: 75,
+        maxMorale: 75,
+        orders: 'attack',
+        category: 'Range'
+    },
+    Raiders: {
+        name: 'Light Raiders',
+        description: 'Young warriors with minimal armor, weaponized in javelins.',
+        hp: 100,
+        maxHp: 100,
+        damage: [1, 6], // d8 damage
+        apdamage: 2,
+        armor: 1,
+        speed: 6,
+        cost: 50,
+        range: 35,
+        ammo: 0,
+        morale: 60,
+        maxMorale: 60,
+        orders: 'attack',
+        category: 'Cavalry'
     },
     Cavalry: {
         name: 'Cavalry',
@@ -55,13 +143,31 @@ const units = {
         damage: [1, 8], // d8 damage
         apdamage: 1,
         armor: 2,
-        speed: 3,
-        cost: 10,
+        speed: 4,
+        cost: 75,
         range: 1,
         ammo: 0,
         morale: 90,
         maxMorale: 90,
-        orders: 'follow_leader'
+        orders: 'follow_leader',
+        category: 'Cavalry'
+    },
+    WingedHussars: {
+        name: 'Winged Hussars',
+        description: 'Probably heaviest mounted unit ever, XVII century tank.',
+        hp: 100,
+        maxHp: 100,
+        damage: [2, 12], // d8 damage
+        apdamage: 5,
+        armor: 4,
+        speed: 3,
+        cost: 125,
+        range: 40,
+        ammo: 24,
+        morale: 250,
+        maxMorale: 250,
+        orders: 'attack',
+        category: 'Cavalry'
     },
     General: {
         name: 'General',
@@ -75,9 +181,10 @@ const units = {
         cost: 100,
         range: 200,
         ammo: 100,
-        morale: 160,
-        maxMorale: 160,
-        orders: 'leader'
+        morale: 300,
+        maxMorale: 300,
+        orders: 'leader',
+        category: 'General'
     },
     Warlord: {
         name: 'Warlord',
@@ -86,14 +193,15 @@ const units = {
         maxHp: 600,
         damage: [1, 50], // d8 damage
         apdamage: 10,
-        armor: 4,
+        armor: 6,
         speed: 2,
         cost: 100,
         range: 10,
         ammo: 100,
         morale: 260,
         maxMorale: 260,
-        orders: 'leader'
+        orders: 'leader',
+        category: 'General'
     },
     // Add more units as needed
 };
