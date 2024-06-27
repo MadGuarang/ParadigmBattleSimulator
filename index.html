@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PARADIGM BATTLE SIMULATOR</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="units.js"></script>
+    <script src="scripts.js"></script>
+</head>
+<body>
+    <div id="pre-battle">
+        <h1>PARADIGM BATTLE SIMULATOR</h1>
+        <div class="setup-section">
+            <h2>Player Setup</h2>
+            <label>Maximum Army Size: <input type="number" id="player-army-size" min="1" max="3000" value="1800"></label>
+            <label>Morale: <input type="number" id="player-morale" min="-9" max="9" value="5"></label>
+            <div id="player-units">
+                <!-- Unit slots will be generated here dynamically -->
+            </div>
+        </div>
+        
+        <div class="setup-section">
+            <h2>Enemy Setup</h2>
+            <label>Maximum Army Size: <input type="number" id="enemy-army-size" min="1" max="3000" value="1800"></label>
+            <label>Morale: <input type="number" id="enemy-morale" min="-9" max="9" value="1"></label>
+            <div id="enemy-units">
+                <!-- Unit slots will be generated here dynamically -->
+            </div>
+        </div>
+        
+        <button id="start-battle">Start Battle</button>
+    </div>
+    
+    <div id="battle" style="display: none;">
+        <canvas id="battlefield" width="600" height="800"></canvas>
+        <div id="battle-controls">
+            <div id="player-controls">
+                <h2>Player Army</h2>
+                <p id="player-info"></p>
+                <button id="select-footmen">Footmen</button>
+                <button id="select-archers">Archers</button>
+                <button id="select-cavalry">Cavalry</button>
+                <button id="select-general">General</button>
+            </div>
+            <div id="order-controls">
+                <h2>Player Army</h2>
+                <p id="army-order"></p>
+                <button id="select-attack">Attack</button>
+                <button id="select-defend">Defend</button>
+                <button id="select-retreat">Fall back</button>
+                <button id="select-follow">Follow leader</button>
+            </div>
+            <button id="pause-battle">Pause Simulation</button>
+            <button id="resume-battle">Resume Simulation</button>
+            <div id="enemy-controls">
+                <h2>Enemy Army</h2>
+                <p id="enemy-info"></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
