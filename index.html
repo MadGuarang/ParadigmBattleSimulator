@@ -11,53 +11,113 @@
 <body>
     <div id="pre-battle">
         <h1>PARADIGM BATTLE SIMULATOR</h1>
-        <div class="setup-section">
+        <div class="setup-section" id="player-setup">
             <h2>Player Setup</h2>
-            <label>Maximum Army Size: <input type="number" id="player-army-size" min="1" max="3000" value="1800"></label>
-            <label>Morale: <input type="number" id="player-morale" min="-9" max="9" value="5"></label>
-            <div id="player-units">
+            <div id="summary">
+                <p id="player-summary"></p>
+            </div>
+            <label>Health: <input type="number" id="player-morale" min="-9" max="90" value="50"> (X10%)</label>
+            <label>Ammo: <input type="number" id="player-army-size" min="-9" max="90" value="50"> (X10%)</label>
+            <div id="player-units" class="unit-row">
                 <!-- Unit slots will be generated here dynamically -->
             </div>
         </div>
         
-        <div class="setup-section">
+        <div class="setup-section" id="enemy-setup">
             <h2>Enemy Setup</h2>
-            <label>Maximum Army Size: <input type="number" id="enemy-army-size" min="1" max="3000" value="1800"></label>
-            <label>Morale: <input type="number" id="enemy-morale" min="-9" max="9" value="1"></label>
-            <div id="enemy-units">
+            <div id="summary">
+                <p id="enemy-summary"></p>
+            </div>
+            <label>Health: <input type="number" id="enemy-morale" min="-9" max="90" value="50"> (X10%)</label>
+            <label>Ammo: <input type="number" id="enemy-army-size" min="1" max="6000" value="50"> (X10%)</label>
+            <div id="enemy-units" class="unit-row">
                 <!-- Unit slots will be generated here dynamically -->
             </div>
+        </div>
+        
+        <div id="summary">
+            <h2>Battle Simulation</h2>
         </div>
         
         <button id="start-battle">Start Battle</button>
+        <button id="help-rules">HELP - RULES</button>
+        <button id="about">About</button>
     </div>
     
     <div id="battle" style="display: none;">
-        <canvas id="battlefield" width="600" height="800"></canvas>
+        <canvas id="battlefield" width="800" height="800"></canvas>
         <div id="battle-controls">
+            
             <div id="player-controls">
                 <h2>Player Army</h2>
+                    
+<div id="unit-status">
+    <div>Player Alive: <span id="player-alive-counter"></span></div>
+    <div>Player Dead: <span id="player-dead-counter"></span></div>
+    
+</div>
+<div id="unit-orders">
+    <h3>Unit Orders</h3>
+    <div id="player-unit-orders"></div>
+    <div id="selected-unit-type">Units chosen: None</div>
+    <div id="selected-unit-order">Order chosen: None</div>
+    <div id="enemy-unit-orders"></div>
+</div>
+
                 <p id="player-info"></p>
-                <button id="select-footmen">Footmen</button>
-                <button id="select-archers">Archers</button>
+                <button id="select-infantry">Infantry</button>
+                <button id="select-range">Range</button>
                 <button id="select-cavalry">Cavalry</button>
                 <button id="select-general">General</button>
             </div>
             <div id="order-controls">
-                <h2>Player Army</h2>
+                <h2>Army Orders</h2>
                 <p id="army-order"></p>
                 <button id="select-attack">Attack</button>
-                <button id="select-defend">Defend</button>
+                <button id="select-skirmish">Skirmish</button>
+                <button id="select-defend">Hold</button>
                 <button id="select-retreat">Fall back</button>
                 <button id="select-follow">Follow leader</button>
+                <button id="select-regroup">Regroup</button> <!-- Look for comrades -->
             </div>
             <button id="pause-battle">Pause Simulation</button>
             <button id="resume-battle">Resume Simulation</button>
             <div id="enemy-controls">
                 <h2>Enemy Army</h2>
                 <p id="enemy-info"></p>
+                <div>Enemy Alive: <span id="enemy-alive-counter"></span></div>
+    <div>Enemy Dead: <span id="enemy-dead-counter"></span></div>
             </div>
         </div>
+    </div>
+    <div id="help-popup" class="popup" style="display: none;">
+        <h2>Help - Rules</h2>
+        <p>This is a simple battle simulator. You have total freedom in setting up your and enemy army. You decide how many units, their types, and morale. Once setup is complete, click 'Start Battle' to begin the simulation.</p>
+        <p>Key Points:</p>
+        <ol>
+            <li>Set up your army and the enemy army with the desired units and morale.</li>
+            <li>Select unit categories and give orders using the buttons on the right during the battle.</li>
+            <li>The 'AUTO' and 'MANUAL' toggle controls the general's movement.</li>
+            <li>Use 'Attack', 'Defend', 'Fall back', and 'Follow leader' to control unit actions.</li>
+            <li>Player units will be placed on the left side and enemy units on the right side of the battlefield.</li>
+            <li>Monitor the status of your units and the enemy's units using the counters provided.</li>
+            <li>Use 'Pause Simulation' to halt the battle temporarily.</li>
+            <li>The general's unit can be controlled manually using WSAD keys when in 'MANUAL' mode.</li>
+        </ol>
+        <button id="close-help">Close</button>
+    </div>
+
+    <div id="about-popup" class="popup" style="display: none;">
+        <h2>About</h2>
+        <p>Paradigm Battle Simulator Overview</p>
+        <p>Paradigm Battle Simulator, developed by MadGuarang, is a browser-based application designed to simulate tactical battles between customizable armies. This project focuses on providing a platform where users can set up their armies, configure unit types, weapons, and engage in simulated battles to determine the outcome based on strategic choices and unit statistics.</p>
+        <p>Features:</p>
+        <ul>
+            <li>Army Configuration: Players can configure their armies by selecting unit types, setting unit counts, and choosing melee and ranged weapons for each unit.</li>
+        </ul>
+        <p>This simulator is a collaborative effort to demonstrate the potential of AI-driven projects. It's designed to be expandable, encouraging users to tweak and create their own units using the units.js file.</p>
+        <p>The project also aims to showcase the beauty of mathematics in visual form, where moving units represent complex math equations, making them look alive.</p>
+        <button id="close-about">Close</button>
     </div>
 </body>
 </html>
