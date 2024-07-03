@@ -23,6 +23,10 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('select-retreat').addEventListener('click', () => selectedOrderSet('retreat'));
     document.getElementById('select-follow').addEventListener('click', () => selectedOrderSet('follow'));
     document.getElementById('select-regroup').addEventListener('click', () => selectedOrderSet('regroup'));
+    document.getElementById('save-player-army').addEventListener('click', () => saveArmy('player'));
+    document.getElementById('load-player-army').addEventListener('click', () => loadArmy('player'));
+    document.getElementById('save-enemy-army').addEventListener('click', () => saveArmy('enemy'));
+    document.getElementById('load-enemy-army').addEventListener('click', () => loadArmy('enemy'));
     document.getElementById('help-rules').addEventListener('click', () => {
         document.getElementById('help-popup').style.display = 'block';
     });
@@ -56,6 +60,50 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+
+
+
+function saveArmy(side) {
+    const army = [];
+    for (let i = 1; i <= 6; i++) {
+        const unitType = document.getElementById(`${side}-unit${i}`).value;
+        const unitCount = document.getElementById(`${side}-unit${i}-count`).value;
+        army.push({ unitType, unitCount });
+    }
+    const saveName = prompt("Choose save name:");
+    if (saveName) {
+        fetch('save_army.php', {
+            method: 'POST',
+            body: JSON.stringify({ name: saveName, side: side, army: army }),
+            headers: { 'Content-Type': 'application/json' }
+        }).then(response => response.json()).then(data => {
+            if (data.success) {
+                alert('Army saved successfully');
+            } else {
+                alert('Error saving army');
+            }
+        });
+    }
+}
+
+function loadArmy(side) {
+    fetch('load_army.php', {
+        method: 'POST',
+        body: JSON.stringify({ side: side }),
+        headers: { 'Content-Type': 'application/json' }
+    }).then(response => response.json()).then(data => {
+        if (data.success) {
+            const army = data.army;
+            for (let i = 0; i < army.length; i++) {
+                document.getElementById(`${side}-unit${i + 1}`).value = army[i].unitType;
+                document.getElementById(`${side}-unit${i + 1}-count`).value = army[i].unitCount;
+                updateUnitStats(side, i + 1);
+            }
+        } else {
+            alert('Error loading army');
+        }
+    });
+}
 
 
 function generateUnitSlots(side) {
@@ -387,41 +435,6 @@ function drawUnits(ctx, units) {
 }
 
 
-function moveUnitsOLD(units, enemyUnits) {
-    units.forEach(unit => {
-        let moralereward = 1;
-        if (unit.morale < unit.maxMorale) {
-            unit.morale += Math.min(moralereward, unit.maxMorale - unit.morale);
-        }
-        if (unit.morale > 30) {
-            if (unit.orders = 'defend')  {
-                console.log('Unit: ' + unit.name + ' ==> order: ' + unit.orders + ')');
-                let closestEnemy = findClosestEnemy(unit, enemyUnits);
-                if (closestEnemy) {
-                    if (!isInRange(unit, closestEnemy)) {
-                        moveToTarget(unit, closestEnemy);
-                    }
-                    if (isInRange(unit, closestEnemy)) {
-                        attackUnit(unit, closestEnemy);
-                        if (unit.ammo > 0) unit.ammo -= 1;
-                    }
-                }
-            }
-        } else if (unit.morale <= 30) {
-            let closestEnemy = findClosestEnemy(unit, enemyUnits);
-            if (closestEnemy) {
-                if (!isInRange(unit, closestEnemy)) {
-                    let closestAlly = findRandomAlly(unit, units);
-                    moveToTarget(unit, closestAlly);
-                }
-                if (isInRange(unit, closestEnemy)) {
-                    moveToSafety(unit, closestEnemy);
-                }
-            }
-        }
-    });
-}
-
 function moveUnits(units, enemyUnits) {
     units.forEach(unit => {
         let moralereward = 1;
@@ -494,6 +507,21 @@ function moveUnits(units, enemyUnits) {
                 }  
                 }
                 break;
+            case 'regroup':
+                let CloseEnemy = findClosestEnemy(unit, enemyUnits);
+                
+                if (unit.morale > 30) {
+                    if (isInRange(unit, CloseEnemy)) {
+                        let ClosestAlly = findClosestAlly(unit, units);
+                        attackUnit(unit, CloseEnemy);
+                        moveToTarget(unit, ClosestAlly);
+                       }
+                        
+                } else {
+                    let ClosestAlly = findClosestAlly(unit, units);
+                    moveToTarget(unit, ClosestAlly);
+                }
+                break;
             case 'follow':
                 if (unit.morale > 5) {
                     unit.morale += Math.min(moralereward, unit.maxMorale - unit.morale);
@@ -507,13 +535,6 @@ function moveUnits(units, enemyUnits) {
         
         
     });
-}
-function findRandomTarget(unit, enemyUnits) {
-    return enemyUnits[Math.floor(Math.random() * enemyUnits.length)];
-}
-
-function findRandomAlly(unit, units) {
-    return units[Math.floor(Math.random() * units.length)];
 }
 
 function findClosestAlly(unit, units) {
@@ -538,6 +559,7 @@ function moveToSafety(unit, target) {
     //unit.x = (unit.x + battlefieldWidth) % battlefieldWidth;
     //unit.y = (unit.y + battlefieldHeight) % battlefieldHeight;
 }
+
 
 function findClosestEnemy(unit, enemyUnits) {
     let closestEnemy = null;
@@ -594,5 +616,11 @@ function removeUnit(unit) {
     }
 }
 
+function findRandomTarget(unit, enemyUnits) {
+    return enemyUnits[Math.floor(Math.random() * enemyUnits.length)];
+}
 
+function findRandomAlly(unit, units) {
+    return units[Math.floor(Math.random() * units.length)];
+}
 
