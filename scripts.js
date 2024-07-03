@@ -13,10 +13,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('start-battle').addEventListener('click', startBattle);
     document.getElementById('pause-battle').addEventListener('click', togglePause);
-    document.getElementById('select-infantry').addEventListener('click', () => selectUnitType('infantry'));
-    document.getElementById('select-range').addEventListener('click', () => selectUnitType('range'));
-    document.getElementById('select-cavalry').addEventListener('click', () => selectUnitType('cavalry'));
-    document.getElementById('select-general').addEventListener('click', () => selectUnitType('general'));
+    document.getElementById('select-infantry').addEventListener('click', () => selectUnitType('Infantry'));
+    document.getElementById('select-range').addEventListener('click', () => selectUnitType('Range'));
+    document.getElementById('select-cavalry').addEventListener('click', () => selectUnitType('Cavalry'));
+    document.getElementById('select-general').addEventListener('click', () => selectUnitType('General'));
     document.getElementById('select-attack').addEventListener('click', () => selectedOrderSet('attack'));
     document.getElementById('select-skirmish').addEventListener('click', () => selectedOrderSet('skirmish'));
     document.getElementById('select-defend').addEventListener('click', () => selectedOrderSet('defend'));
@@ -85,6 +85,7 @@ function updateUnitStats(side, slot) {
     if (statsElement) {
         statsElement.innerHTML = `
             <img src="${unit.portrait}" alt="${unit.name}" class="unit-portrait">
+            <p>${unit.name}</p>
             <p>${unit.description}</p>
             <p>HP: ${unit.hp}</p>
             <p>Damage: ${unit.damage.join('d')}</p>
@@ -95,7 +96,6 @@ function updateUnitStats(side, slot) {
             <p>Range: ${unit.range}</p>
             <p>Ammo: ${unit.ammo}</p>
             <p>Morale: ${unit.morale}</p>
-            <p>maxMorale: ${unit.maxMorale}</p>
             <p>orders: ${unit.orders}</p>
             <p>category: ${unit.category}</p>
             <p>Total Cost: ${unit.cost * parseInt(document.getElementById(`${side}-unit${slot}-count`).value)}</p>
@@ -184,15 +184,15 @@ function selectedOrderSet(order) {
     selectedOrderType = order;
     console.log('Orders selectedOrderSet -' + selectedUnitType + ', ' + selectedOrderType + ')');
     
-    const attackButton = document.getElementById('select-attack');
-    const SkirmishButton = document.getElementById('select-skirmish');
-    const DefendButton = document.getElementById('select-defend');
-    const RetreatButton = document.getElementById('select-retreat');
-    const FollowButton = document.getElementById('select-follow');
-    const RegroupButton = document.getElementById('select-regroup');
+    const AttackButton = document.getElementById('select-Attack');
+    const SkirmishButton = document.getElementById('select-Skirmish');
+    const DefendButton = document.getElementById('select-Defend');
+    const RetreatButton = document.getElementById('select-Retreat');
+    const FollowButton = document.getElementById('select-Follow');
+    const RegroupButton = document.getElementById('select-Regroup');
     
     
-    if (attackButton) attackButton.classList.remove('active');
+    if (AttackButton) AttackButton.classList.remove('active');
     if (SkirmishButton) SkirmishButton.classList.remove('active');
     if (DefendButton) DefendButton.classList.remove('active');
     if (RetreatButton) RetreatButton.classList.remove('active');
@@ -334,6 +334,7 @@ function createUnit(unitTemplate, isEnemy, morale, ammunition) {
     unit.damage = Math.floor(Math.random() * unitTemplate.damage[1]) + unitTemplate.damage[0];
     unit.morale = unitTemplate.morale * (1 + morale / 10);
     unit.maxMorale = unitTemplate.maxMorale * (1 + morale / 10);
+    unit.orders = unitTemplate.orders
     unit.x = isEnemy ? battlefieldWidth - Math.random() * 100 : Math.random() * 100;
     unit.y = Math.random() * battlefieldHeight;
     unit.isEnemy = isEnemy;
@@ -386,14 +387,15 @@ function drawUnits(ctx, units) {
 }
 
 
-function moveUnits(units, enemyUnits) {
+function moveUnitsOLD(units, enemyUnits) {
     units.forEach(unit => {
         let moralereward = 1;
         if (unit.morale < unit.maxMorale) {
             unit.morale += Math.min(moralereward, unit.maxMorale - unit.morale);
         }
-        if (unit.morale >= 30) {
+        if (unit.morale > 30) {
             if (unit.orders = 'defend')  {
+                console.log('Unit: ' + unit.name + ' ==> order: ' + unit.orders + ')');
                 let closestEnemy = findClosestEnemy(unit, enemyUnits);
                 if (closestEnemy) {
                     if (!isInRange(unit, closestEnemy)) {
@@ -420,6 +422,92 @@ function moveUnits(units, enemyUnits) {
     });
 }
 
+function moveUnits(units, enemyUnits) {
+    units.forEach(unit => {
+        let moralereward = 1;
+        if (unit.morale < unit.maxMorale) {
+            unit.morale += Math.min(moralereward, unit.maxMorale - unit.morale);
+        }
+        
+        // Update morale based on the current order
+        switch (unit.orders) {
+            case 'attack':
+                if (unit.morale > 30) {
+                    let closestEnemy = findClosestEnemy(unit, enemyUnits);
+                if (closestEnemy) {
+                    if (!isInRange(unit, closestEnemy)) {
+                        moveToTarget(unit, closestEnemy);
+                    }
+                    if (isInRange(unit, closestEnemy)) {
+                        attackUnit(unit, closestEnemy);
+                    }
+                }
+                } else {
+                    let closestEnemy = findClosestEnemy(unit, enemyUnits);
+            if (closestEnemy) {
+                if (!isInRange(unit, closestEnemy)) {
+                    let randomAlly = findRandomAlly(unit, units);
+                    moveToTarget(unit, randomAlly);
+                }
+                if (isInRange(unit, closestEnemy)) {
+                    moveToSafety(unit, closestEnemy);
+                    }
+                }  
+                }
+                break;
+            case 'defend':
+                let closestEnemy = findClosestEnemy(unit, enemyUnits);
+                if (unit.morale > 30) {
+                    unit.morale += Math.min(moralereward*2, unit.maxMorale - unit.morale);
+                    if (isInRange(unit, closestEnemy)) {
+                        attackUnit(unit, closestEnemy);}
+                } else {
+                    let ClosestAlly = findClosestAlly(unit, units);
+                    moveToTarget(unit, ClosestAlly);
+                }
+                break;
+            case 'skirmish':
+                if (unit.morale > 30) {
+                    let closestEnemy = findClosestEnemy(unit, enemyUnits);
+                if (closestEnemy) {
+                    if (!isInRange(unit, closestEnemy)) {
+                        moveToTarget(unit, closestEnemy);
+                    }
+                    if (isInRange(closestEnemy, unit)) {   //we check if 'attacker' is in range of 'defender', if yes, then instead of attack, unit moves to a safe place
+                        moveToSafety(unit, closestEnemy);
+                        unit.morale += Math.min(moralereward, unit.maxMorale - unit.morale);  // during retreat unit does not attack, instead it gains 1 morale point for succesful battle management      
+                    }
+                    if (isInRange(unit, closestEnemy)) {
+                        attackUnit(unit, closestEnemy);    
+                    }
+                }
+                } else {
+                    let closestEnemy = findClosestEnemy(unit, enemyUnits);
+            if (closestEnemy) {
+                if (!isInRange(unit, closestEnemy)) {     // if unit is below 30 morale, then a) if it is out of enemy range, it stays cool looking for allies
+                    let randomAlly = findRandomAlly(unit, units);
+                    moveToTarget(unit, randomAlly);
+                }
+                if (isInRange(unit, closestEnemy)) {    // b) if enemy is close and morale is <30>, then unit finally panics and just retreats to opposite direction to enemy
+                    moveToSafety(unit, closestEnemy);
+                    }
+                }  
+                }
+                break;
+            case 'follow':
+                if (unit.morale > 5) {
+                    unit.morale += Math.min(moralereward, unit.maxMorale - unit.morale);
+                } else {
+                    unit.morale = 5;
+                }
+                break;
+            default:
+                unit.morale = 0;
+        }
+        
+        
+    });
+}
 function findRandomTarget(unit, enemyUnits) {
     return enemyUnits[Math.floor(Math.random() * enemyUnits.length)];
 }
@@ -446,8 +534,9 @@ function moveToSafety(unit, target) {
     unit.x += unit.speed * Math.cos(angle);
     unit.y += unit.speed * Math.sin(angle);
 
-    unit.x = (unit.x + battlefieldWidth) % battlefieldWidth;
-    unit.y = (unit.y + battlefieldHeight) % battlefieldHeight;
+    
+    //unit.x = (unit.x + battlefieldWidth) % battlefieldWidth;
+    //unit.y = (unit.y + battlefieldHeight) % battlefieldHeight;
 }
 
 function findClosestEnemy(unit, enemyUnits) {
@@ -475,9 +564,7 @@ function moveToTarget(unit, target) {
 function isInRange(unit, target) {
     return Math.hypot(target.x - unit.x, target.y - unit.y) <= unit.range;
 }
-//function isInRange(unit, target) {
-//    return (unit.ammo > 0 ? Math.hypot(target.x - unit.x, target.y - unit.y) : 1) <= (unit.ammo > 0 ? unit.range : 1);
-//}
+
 
 function attackUnit(unit, target) {
     let damage = unit.damage - target.armor;
@@ -486,15 +573,12 @@ function attackUnit(unit, target) {
     target.hp -= Math.max(damage, 0);
     target.hp -= Math.max(apdamage, 0);
     target.morale -= Math.max(moraledamage, 0);
-    if (unit.ammo > 0) {        //only range units change their range after using ammo, other units need higher range value to underline that they use eg. long range melee weapons
+    if (unit.ammo > 0) {        //infantry or other non-ranged units can throw projectiles, or we assume that they use long range weapons like 2H swords, halberds, lances, but after some time they also break. We always assume that unit has a spare, low-range weapon
         unit.ammo -= 1;
-     }
-    if (unit.ammo <= 0) {        //only range units change their range after using ammo, other units need higher range value to underline that they use eg. long range melee weapons
-        unit.range = 1;
      }
     if (target.hp <= 0) {
         target.hp = 0;
-        console.log('Morgue: ' + unit.name + ' causes damage for' + damage + ' + armor piercing damage for' + apdamage + ' killing ' + target.name + ')');
+        //console.log('Morgue: ' + unit.name + ' causes damage for' + damage + ' + armor piercing damage for' + apdamage + ' killing ' + target.name + ' order: ' + unit.order + ')');
         removeUnit(target);
         unit.morale += Math.min(moraledamage, unit.maxMorale - unit.morale);
     }

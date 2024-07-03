@@ -71,8 +71,26 @@ const units = {
         category: 'Infantry',
         portrait: 'assets/Panzerman.png'
     },
-    Panzerman: {
-        name: 'Panzer Sapper',
+    PanzerGuard: {
+        name: 'Panzer Guard',
+        description: 'Very heavy infantry unit with medium damage output.',
+        hp: 75,
+        maxHp: 75,
+        damage: [2, 8], // d6 damage
+        apdamage: 2,
+        armor: 3,
+        speed: 0.5,
+        cost: 40,
+        range: 5,
+        ammo: 20,
+        morale: 135,
+        maxMorale: 135,
+        orders: 'attack',
+        category: 'Infantry',
+        portrait: 'assets/Panzerman.png'
+    },
+    GunpowderKnight: {
+        name: 'Gunpowder Knight',
         description: 'Medium armored infantry unit with powerful damage output.',
         hp: 75,
         maxHp: 75,
@@ -118,7 +136,7 @@ const units = {
         speed: 1.25,
         cost: 35,
         range: 100,
-        ammo: 100,
+        ammo: 120,
         morale: 45,
         maxMorale: 45,
         orders: 'skirmish',
@@ -143,41 +161,23 @@ const units = {
         category: 'Range',
         portrait: 'assets/Crossbowman.png'
     },
-    Cannonier: {
-        name: 'Cannonier',
-        description: 'Can shoot from a distance. Low ammo, high damage.',
+    Naftathrower: {
+        name: 'Nafta thrower',
+        description: 'Throws flammable nafta on a short distance. Low ammo, high damage.',
         hp: 65,
         maxHp: 65,
-        damage: [2, 6], // 2d3 damage
+        damage: [2, 4], // 2d6 damage
         apdamage: 3,
         armor: 1,
         speed: 1,
         cost: 60,
-        range: 40,
+        range: 25,
         ammo: 50,
         morale: 75,
         maxMorale: 75,
         orders: 'attack',
         category: 'Range',
         portrait: 'assets/Cannonier.png'
-    },
-    Cannoncino: {
-        name: 'Cannoncino di acciaio',
-        description: 'Walking cannon in armor, using hand cannon, elite range unit.',
-        hp: 80,
-        maxHp: 80,
-        damage: [4, 8], // 4d2 damage
-        apdamage: 6,
-        armor: 4,
-        speed: 0.75,
-        cost: 105,
-        range: 50,
-        ammo: 40,
-        morale: 75,
-        maxMorale: 75,
-        orders: 'attack',
-        category: 'Range',
-        portrait: 'assets/Juggernaut.png'
     },
     FireworckMonk: {
         name: 'Fireworck Monk',
@@ -197,6 +197,24 @@ const units = {
         category: 'Range',
         portrait: 'assets/FireworckMonk.png'
     },
+    Cannoncino: {
+        name: 'Cannoncino di acciaio',
+        description: 'Walking cannon in armor, using hand cannon, elite range unit.',
+        hp: 80,
+        maxHp: 80,
+        damage: [3, 4], // 3d3 damage
+        apdamage: 6,
+        armor: 4,
+        speed: 0.75,
+        cost: 105,
+        range: 50,
+        ammo: 40,
+        morale: 75,
+        maxMorale: 75,
+        orders: 'attack',
+        category: 'Range',
+        portrait: 'assets/Juggernaut.png'
+    },
     Raiders: {
         name: 'Light Raiders',
         description: 'Young wolf riders using primitive javelins. Very fast. ',
@@ -205,7 +223,7 @@ const units = {
         damage: [1, 4], // d8 damage
         apdamage: 1,
         armor: 0,
-        speed: 5,
+        speed: 4,
         cost: 40,
         range: 40,
         ammo: 20,
@@ -215,16 +233,16 @@ const units = {
         category: 'Cavalry',
         portrait: 'assets/Raiders.png'
     },
-    Cavalry: {
-        name: 'Cavalry',
-        description: 'Fast and powerful mounted unit.',
+    CavalryShock: {
+        name: 'Shock Cavalry',
+        description: 'Fast mounted unit armed with spears. Good at charges, cannot stand long fight with equal infantry units due to light armor.',
         hp: 100,
         maxHp: 100,
         damage: [1, 8], // d8 damage
         apdamage: 1,
-        armor: 2,
-        speed: 4,
-        cost: 80,
+        armor: 1,
+        speed: 6,
+        cost: 70,
         range: 1,
         ammo: 0,
         morale: 90,
@@ -233,16 +251,53 @@ const units = {
         category: 'Cavalry',
         portrait: 'assets/Cavalry.png'
     },
+    
+    BeduinWarrior: {
+        name: 'Beduin Warrior',
+        description: 'Light mounted unit armed with spear and few javelins. Too slow for horse racing, but excellent to deal with enemy range units.',
+        hp: 100,
+        maxHp: 100,
+        damage: [1, 6], // d8 damage
+        apdamage: 1,
+        armor: 1,
+        speed: 6,
+        cost: 70,
+        range: 30,
+        ammo: 20,
+        morale: 100,
+        maxMorale: 100,
+        orders: 'attack',
+        category: 'Cavalry',
+        portrait: 'assets/BeduinWarrior.png'
+    },
+    BeduinCamelArcher: {
+        name: 'Beduin Camel Archer',
+        description: 'A Camel Bedouin cavalry weaponized with bows. These warriors were adept at using camels as mounts, which allowed them to cover great distances while carrying both themselves and their equipment.',
+        hp: 70,
+        maxHp: 70,
+        damage: [1, 4], // d4 damage
+        apdamage: 1,
+        armor: 1,
+        speed: 3,
+        cost: 40,
+        range: 60,
+        ammo: 90,
+        morale: 70,
+        maxMorale: 70,
+        orders: 'skirmish',
+        category: 'Cavalry',
+        portrait: 'assets/BeduinCamelArcher.png'
+    },
     WingedHussars: {
         name: 'Winged Hussars',
-        description: 'Probably heaviest mounted unit ever, XVII century tanks.',
-        hp: 130,
-        maxHp: 130,
-        damage: [4, 12], // 4d3 damage
+        description: 'Probably heaviest mounted unit ever, XVII century tanks. In summary, the Polish Hussars were a legendary cavalry unit in 17th and 18th-century Europe, distinguished by their use of pistols, long, hollow lances, and sabers.',
+        hp: 150,
+        maxHp: 150,
+        damage: [4, 3], // 4d3 damage
         apdamage: 3,
         armor: 4,
-        speed: 2.5,
-        cost: 150,
+        speed: 3,
+        cost: 100,
         range: 40,
         ammo: 24,
         morale: 250,
@@ -251,61 +306,61 @@ const units = {
         category: 'Cavalry',
         portrait: 'assets/WingedHussars.png'
     },
-    PegasRiders: {
+    PegasusRiders: {
         name: 'Pegasus Riders',
         description: 'Elven flying cavalry. Light armor, but powerful magic damage.',
-        hp: 200,
-        maxHp: 200,
-        damage: [1, 20], // 4d3 damage
+        hp: 170,
+        maxHp: 170,
+        damage: [2, 10], // 2d10 damage
         apdamage: 3,
         armor: 1,
-        speed: 12.5,
-        cost: 250,
+        speed: 14,
+        cost: 220,
         range: 60,
         ammo: 200,
-        morale: 120,
-        maxMorale: 120,
+        morale: 140,
+        maxMorale: 140,
         orders: 'attack',
         category: 'Cavalry',
         portrait: 'assets/Pegasus.png'
     },
-    General: {
-        name: 'General',
+    GenArtilleryCommander: {
+        name: 'Artillery Commander',
         description: 'Army leader focused on ranged combat. ',
-        hp: 1000,
-        maxHp: 1000,
+        hp: 1500,
+        maxHp: 1500,
         damage: [1, 50], // d8 damage
-        apdamage: 2,
+        apdamage: 4,
         armor: 3,
-        speed: 2,
+        speed: 4,
         cost: 1000,
-        range: 120,
-        ammo: 200,
-        morale: 500,
-        maxMorale: 500,
-        orders: 'attack',
+        range: 200,
+        ammo: 800,
+        morale: 2000,
+        maxMorale: 2000,
+        orders: 'skirmish',
         category: 'General',
         portrait: 'assets/General.png'
     },
-    Warlord: {
+    GenWarlord: {
         name: 'Warlord',
         description: 'Army leader fighting in close distance. ',
-        hp: 1200,
-        maxHp: 1200,
-        damage: [1, 50], // d50 damage
-        apdamage: 10,
-        armor: 2,
+        hp: 1800,
+        maxHp: 1800,
+        damage: [4, 20], // 4d20 damage
+        apdamage: 6,
+        armor: 4,
         speed: 2,
         cost: 1500,
         range: 10,
-        ammo: 1000,
-        morale: 760,
-        maxMorale: 760,
+        ammo: 1000, //has giant weapon with huge range that breaks after 1000 hits, then range=1
+        morale: 3200,
+        maxMorale: 3200,
         orders: 'leader',
         category: 'General',
         portrait: 'assets/Warlord.png'
     },
-    Warlock: {
+    GenDarkEnvoy: {
         name: 'Dark Envoy',
         description: 'Powerful army leader using black magic. ',
         hp: 1400,
@@ -361,14 +416,14 @@ const units = {
     },
     MadGuarang: {
     name: 'JokerMad',
-    description: 'MadGuarang is a cookie joker-monster using dirty tricks in fight.',
+    description: 'MadGuarang is a cookie joker-monster using dirty tricks in fight. Unbelievably agile, can dodge hits and bullets with ease.',
     hp: 125,
     maxHp: 125,
-    damage: [2, 8], // 2d4 damage
+    damage: [2, 8], // 2d8 damage
     apdamage: 1,
-    armor: 3,
-    speed: 1.25,
-    cost: 55,
+    armor: 4,
+    speed: 1.5,
+    cost: 75,
     range: 40,
     ammo: 48,
     morale: 165,
@@ -450,6 +505,97 @@ const units = {
     portrait: 'assets/IceCreamOrc.png'
     },
 
+    NecroBat: {
+        name: 'Vampire Bat',
+        description: 'Vampiric bat-like beast. Very aggressive.',
+        hp: 15,
+        maxHp: 15,
+        damage: [1, 2], // d2 damage
+        apdamage: 3,
+        armor: 0,
+        speed: 6,
+        cost: 10,
+        range: 1,
+        ammo: 0,
+        morale: 45,
+        maxMorale: 45,
+        orders: 'attack',
+        category: 'Cavalry',
+        portrait: 'assets/NecroBat.png'
+        },
+        VampireWolf: {
+        name: 'Vampire Wolf',
+        description: 'Vampiric wolf spawn. Slower than bat, but tougher.',
+        hp: 25,
+        maxHp: 25,
+        damage: [1, 4], // d3 damage
+        apdamage: 2,
+        armor: 0,
+        speed: 4,
+        cost: 20,
+        range: 1,
+        ammo: 0,
+        morale: 60,
+        maxMorale: 60,
+        orders: 'attack',
+        category: 'Cavalry',
+        portrait: 'assets/VampireWolf.png'
+        },
+        VampireNoble: {
+        name: 'Vampire Noble',
+        description: 'Low rank vampire that just been accepted to a Clan. Very thirsty, extremaly fast.',
+        hp: 245,
+        maxHp: 245,
+        damage: [1, 12], // d12 damage
+        apdamage: 2,
+        armor: 3,
+        speed: 4,
+        cost: 350,
+        range: 20,
+        ammo: 10,
+        morale: 300,
+        maxMorale: 300,
+        orders: 'attack',
+        category: 'Infantry',
+        portrait: 'assets/VampireNoble.png'
+        },
+        VampireClan: {
+        name: 'Clan Vampire',
+        description: 'Vampire envoy of the Clan. Extreme speed and damage.',
+        hp: 445,
+        maxHp: 445,
+        damage: [1, 20], // d20 damage
+        apdamage: 4,
+        armor: 2,
+        speed: 6,
+        cost: 500,
+        range: 20,
+        ammo: 20,
+        morale: 845,
+        maxMorale: 845,
+        orders: 'attack',
+        category: 'Infantry',
+        portrait: 'assets/VampireHybrid.png'
+        },
+        VampireLord: {
+        name: 'Vampire Lord',
+        description: 'Vampire Lord - ready to plunder and conquer. For the Sabbath, for The Loge and Cabaal. And for his own glory.',
+        hp: 800,
+        maxHp: 800,
+        damage: [1, 50], // d50 damage
+        apdamage: 6,
+        armor: 5,
+        speed: 4,
+        cost: 1250,
+        range: 10,
+        ammo: 60,
+        morale: 1450,
+        maxMorale: 1450,
+        orders: 'attack',
+        category: 'Infantry',
+        portrait: 'assets/VampireLord.png'
+        },
+
     NecroSkeleton: {
     name: 'Skeleton',
     description: 'Skeleton. Low health. Decent speed.',
@@ -522,96 +668,7 @@ const units = {
     category: 'Infantry',
     portrait: 'assets/NecroZombieVeteran.png'
     },
-    NecroBat: {
-    name: 'Vampire Bat',
-    description: 'Vampiric bat-like beast. Very aggressive.',
-    hp: 15,
-    maxHp: 15,
-    damage: [1, 2], // d2 damage
-    apdamage: 3,
-    armor: 0,
-    speed: 6,
-    cost: 10,
-    range: 1,
-    ammo: 0,
-    morale: 45,
-    maxMorale: 45,
-    orders: 'attack',
-    category: 'Cavalry',
-    portrait: 'assets/NecroBat.png'
-    },
-    VampireWolf: {
-    name: 'Vampire Wolf',
-    description: 'Vampiric wolf spawn. Slower than bat, but tougher.',
-    hp: 25,
-    maxHp: 25,
-    damage: [1, 4], // d3 damage
-    apdamage: 2,
-    armor: 0,
-    speed: 4,
-    cost: 20,
-    range: 1,
-    ammo: 0,
-    morale: 60,
-    maxMorale: 60,
-    orders: 'attack',
-    category: 'Cavalry',
-    portrait: 'assets/VampireWolf.png'
-    },
-    VampireNoble: {
-    name: 'Vampire Noble',
-    description: 'Low rank vampire that just been accepted to a Clan. Very thirsty, extremaly fast.',
-    hp: 245,
-    maxHp: 245,
-    damage: [1, 12], // d12 damage
-    apdamage: 2,
-    armor: 3,
-    speed: 4,
-    cost: 350,
-    range: 20,
-    ammo: 10,
-    morale: 300,
-    maxMorale: 300,
-    orders: 'attack',
-    category: 'Infantry',
-    portrait: 'assets/VampireNoble.png'
-    },
-    VampireClan: {
-    name: 'Clan Vampire',
-    description: 'Vampire envoy of the Clan. Extreme speed and damage.',
-    hp: 445,
-    maxHp: 445,
-    damage: [1, 20], // d20 damage
-    apdamage: 4,
-    armor: 2,
-    speed: 6,
-    cost: 500,
-    range: 20,
-    ammo: 20,
-    morale: 845,
-    maxMorale: 845,
-    orders: 'attack',
-    category: 'Infantry',
-    portrait: 'assets/VampireHybrid.png'
-    },
-    VampireLord: {
-    name: 'Vampire Lord',
-    description: 'Vampire Lord devoted to warfare.',
-    hp: 800,
-    maxHp: 800,
-    damage: [1, 50], // d50 damage
-    apdamage: 6,
-    armor: 5,
-    speed: 4,
-    cost: 1250,
-    range: 10,
-    ammo: 60,
-    morale: 1450,
-    maxMorale: 1450,
-    orders: 'attack',
-    category: 'Infantry',
-    portrait: 'assets/VampireLord.png'
-    },
+        
     NecroWeaver: {
     name: 'Death Weaver',
     description: 'Death Weaver - Skeletal witch using illusion to destroy its enemies.',
@@ -667,22 +724,40 @@ const units = {
     category: 'Infantry',
     portrait: 'assets/NecroTombWarrior.png'
     },
-    DarkRider: {
-    name: 'Dark Raider',
+    BlackCavalry: {
+        name: 'Black Cavalry',
+        description: 'Grim raiders in plated armors using claymores and black magic.',
+        hp: 80,
+        maxHp: 80,
+        damage: [2, 6], // 2d6 damage
+        apdamage: 2,
+        armor: 3,
+        speed: 5,
+        cost: 70,
+        range: 1,
+        ammo: 0,
+        morale: 200,
+        maxMorale: 200,
+        orders: 'attack',
+        category: 'Cavalry',
+        portrait: 'assets/BlackCavalry.png'
+    },
+    DarkMessenger: {
+    name: 'Dark Messenger',
     description: 'Fear and sorrow follows Raider of black armored beast as he brings death and destruction.',
-    hp: 100,
-    maxHp: 100,
-    damage: [2, 12], // 2d6 damage
+    hp: 333,
+    maxHp: 333,
+    damage: [4, 12], // 2d12 damage
     apdamage: 4,
     armor: 5,
     speed: 5,
-    cost: 100,
-    range: 1,
-    ammo: 0,
+    cost: 300,
+    range: 80,
+    ammo: 60,
     morale: 400,
     maxMorale: 400,
     orders: 'attack',
-    category: 'Infantry',
+    category: 'Cavalry',
     portrait: 'assets/DarkRider.png'
     },
     NecroDisciple: {
@@ -1135,7 +1210,224 @@ const units = {
     category: 'Range',
     portrait: 'assets/TrenchHellSergeant.png'
     },
+    TrenchGasSoldat: {
+    name: 'Trench Soldat',
+    description: 'Will do everything to survive. If he dies, his body will be recycled to Trench Zombie and sent to the front again.',
+    hp: 60,
+    maxHp: 60,
+    damage: [1, 10], // 1d10 damage
+    apdamage: 2,
+    armor: 0,
+    speed: 1.5,
+    cost: 65,
+    range: 120,
+    ammo: 120,
+    morale: 55,
+    maxMorale: 55,
+    orders: 'skirmish',
+    category: 'Range',
+    portrait: 'assets/TrenchHellSergeant.png'
+    },
+    
     WhiteRabbit: {
+    name: 'White Rabbit',
+    description: 'White Rabbit. Bloodthirsty, ruthless.',
+    hp: 30000,
+    maxHp: 30000,
+    damage: [10, 20], // 10d20 damage
+    apdamage: 25,
+    armor: 0,
+    speed: 10,
+    cost: 25000,
+    range: 1,
+    ammo: 0,
+    morale: 10000,
+    maxMorale: 10000,
+    orders: 'attack',
+    category: 'General',
+    portrait: 'assets/WhiteRabbit.png'
+    },
+    MutantTroglodyte: {
+    name: 'Troglodyte',
+    description: 'Troglodyte, primitive humanoid with abnormal amount of chromosomes. Easy presy to mutations. Strong and aggressive.',
+    hp: 25,
+    maxHp: 25,
+    damage: [1, 4], // d3 damage
+    apdamage: 0,
+    armor: 0,
+    speed: 1.5,
+    cost: 5,
+    range: 1,
+    ammo: 0,
+    morale: 75,
+    maxMorale: 75,
+    orders: 'attack',
+    category: 'Infantry',
+    portrait: 'assets/MutantTroglodyte.png'
+    },
+    Mutant: {
+    name: 'Mutant',
+    description: 'Mutated troglodyte. Stronger, more aggressive, and now - very, very hungry.',
+    hp: 45,
+    maxHp: 45,
+    damage: [2, 3], // d3 damage
+    apdamage: 0,
+    armor: 0,
+    speed: 2,
+    cost: 35,
+    range: 3,
+    ammo: 200,
+    morale: 125,
+    maxMorale: 125,
+    orders: 'attack',
+    category: 'Infantry',
+    portrait: 'assets/MutantGrunt.png'
+    },
+    MutantAlpha: {
+    name: 'MutantAlpha',
+    description: 'Evolution, or rather extreme battle conditions force even more extreme mutations in troglodyte bodies. Abnormal and chaostic production of mutagen causes 6 times stronger units. Their muscles are so hard, that become armor. ',
+    hp: 105,
+    maxHp: 105,
+    damage: [2, 6], // 10d10 damage
+    apdamage: 1,
+    armor: 1,
+    speed: 10,
+    cost: 50,
+    range: 4,
+    ammo: 400,
+    morale: 330,
+    maxMorale: 330,
+    orders: 'attack',
+    category: 'Infantry',
+    portrait: 'assets/MutantAlpha.png'
+    },
+    MutantHiveMaster: {
+    name: 'HiveMaster',
+    description: 'Sometimes many mutants combine themselves in meat pulp and become new entity known as Hive Master. It is believed it is evolutions way to use intelligence and telepathy to make mutants event more efficient devourers.',
+    hp: 3000,
+    maxHp: 3000,
+    damage: [1, 50], // 1d100 damage
+    apdamage: 5,
+    armor: 0,
+    speed: 2,
+    cost: 1500,
+    range: 50,
+    ammo: 1000,
+    morale: 2000,
+    maxMorale: 2000,
+    orders: 'attack',
+    category: 'General',
+    portrait: 'assets/MutantHiveMaster.png'
+    },
+    MutantFly: {
+    name: 'Mutant Fly',
+    description: 'Aka "Flying piranha" - mutated meat pulp with wings and teeths. ',
+    hp: 10,
+    maxHp: 10,
+    damage: [2, 3], // 2d3 damage
+    apdamage: 1,
+    armor: 0,
+    speed: 2.25,
+    cost: 20,
+    range: 1,
+    ammo: 0,
+    morale: 40,
+    maxMorale: 40,
+    orders: 'attack',
+    category: 'Cavalry',
+    portrait: 'assets/MutantFly.png'
+    },
+    InsectsToothFairy: {
+    name: 'Tooth Fairy',
+    description: 'One of many mutations. Uses teeths to rip off eyeballs and use them as auxilliary egg shells during mating season.',
+    hp: 45,
+    maxHp: 45,
+    damage: [3, 3], // d3 damage
+    apdamage: 2,
+    armor: 0,
+    speed: 14,
+    cost: 35,
+    range: 40,
+    ammo: 60,
+    morale: 45,
+    maxMorale: 45,
+    orders: 'attack',
+    category: 'Cavalry',
+    portrait: 'assets/InsectsToothFairy.png'
+    },// Add more units as needed
+    InsectMothFairy: {
+    name: 'Moth Fairy',
+    description: 'Insect-Human hybrid, fights using sword and telepathy. Like most mutants, very fast.',
+    hp: 45,
+    maxHp: 45,
+    damage: [2, 6], // d3 damage
+    apdamage: 2,
+    armor: 0,
+    speed: 2.25,
+    cost: 45,
+    range: 40,
+    ammo: 30,
+    morale: 45,
+    maxMorale: 45,
+    orders: 'skirmish',
+    category: 'Range',
+    portrait: 'assets/InsectMothFairy.png'
+    },
+    InsectWhisperer: {
+    name: 'Whisperer',
+    description: 'There are mutants who can talk with insectoids. They do not fight themselves, their guardians do it for them.',
+    hp: 45,
+    maxHp: 45,
+    damage: [1, 4], // d3 damage
+    apdamage: 0,
+    armor: 0,
+    speed: 1.25,
+    cost: 35,
+    range: 40,
+    ammo: 60,
+    morale: 45,
+    maxMorale: 45,
+    orders: 'skirmish',
+    category: 'Range',
+    portrait: 'assets/InsectWhisperer.png'
+    },
+    MonsterHiveQueen: {
+    name: 'Monster Hive Queen',
+    description: 'Breeder of worlds.',
+    hp: 45,
+    maxHp: 45,
+    damage: [2, 6], // d3 damage
+    apdamage: 2,
+    armor: 0,
+    speed: 2.25,
+    cost: 45,
+    range: 40,
+    ammo: 30,
+    morale: 45,
+    maxMorale: 45,
+    orders: 'skirmish',
+    category: 'Range',
+    portrait: 'assets/InsectHiveQueen.png'
+    },
+    MonsterCapibara: {
+    name: 'Monstrous Capibara',
+    description: 'Mutation of giant rat and capibara.',
+    hp: 45,
+    maxHp: 45,
+    damage: [1, 4], // d3 damage
+    apdamage: 0,
+    armor: 0,
+    speed: 1.25,
+    cost: 35,
+    range: 40,
+    ammo: 60,
+    morale: 45,
+    maxMorale: 45,
+    orders: 'skirmish',
+    category: 'Range',
+    portrait: 'assets/MonsterGiantRatMutant.png'
+    },
+    MutantGiantChau: {
     name: 'White Rabbit',
     description: 'White Rabbit. Bloodthirsty, ruthless.',
     hp: 1000,
@@ -1151,25 +1443,8 @@ const units = {
     maxMorale: 10000,
     orders: 'attack',
     category: 'General',
-    portrait: 'assets/WhiteRabbit.png'
+    portrait: 'assets/MutantGiantChau.png'
     },
-    OrcIceCream: {
-    name: 'Ice Cream Orc',
-    description: 'Orc throwing ice cream balls.',
-    hp: 45,
-    maxHp: 45,
-    damage: [1, 4], // d3 damage
-    apdamage: 0,
-    armor: 0,
-    speed: 1.25,
-    cost: 35,
-    range: 40,
-    ammo: 60,
-    morale: 45,
-    maxMorale: 45,
-    orders: 'skirmish',
-    category: 'Range',
-    portrait: 'assets/IceCreamOrc.png'
-    },
+    
     // Add more units as needed
 };
