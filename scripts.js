@@ -54,8 +54,10 @@ document.getElementById('start-battle').addEventListener('click', function() {
     //startBattle();
 });
 
+
     document.getElementById('start-battle').addEventListener('click', startBattle);
     document.getElementById('pause-battle').addEventListener('click', togglePause);
+   // document.getElementById('unit-editor').addEventListener('click', window.location.href = 'editor.html');
     document.getElementById('select-infantry').addEventListener('click', () => selectUnitType('Infantry'));
     document.getElementById('select-range').addEventListener('click', () => selectUnitType('Range'));
     document.getElementById('select-cavalry').addEventListener('click', () => selectUnitType('Cavalry'));
@@ -69,11 +71,17 @@ document.getElementById('start-battle').addEventListener('click', function() {
     document.getElementById('help-rules').addEventListener('click', () => {
         document.getElementById('help-popup').style.display = 'block';
     });
+    document.getElementById('unit-editor').addEventListener('click', () => {
+        document.getElementById('editor-popup').style.display = 'block';
+    });
     document.getElementById('about').addEventListener('click', () => {
         document.getElementById('about-popup').style.display = 'block';
     });
     document.getElementById('close-help').addEventListener('click', () => {
         document.getElementById('help-popup').style.display = 'none';
+    });
+    document.getElementById('close-editor').addEventListener('click', () => {
+        document.getElementById('editor-popup').style.display = 'none';
     });
     document.getElementById('close-about').addEventListener('click', () => {
         document.getElementById('about-popup').style.display = 'none';
