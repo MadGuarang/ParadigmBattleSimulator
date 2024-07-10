@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Editor</title>
+    <link rel="stylesheet" href="styleseditor.css">
+</head>
+<body>
+    <div class="main-container">
+        <div class="column" id="unit-list-column">
+            <h2>Available Units</h2>
+            <input type="text" id="unitSearch" placeholder="Search units...">
+            <ul id="unitList" class="scrollable-list"></ul>
+        </div>
+        <div class="column" id="unit-details-column">
+            <h2>Unit Details</h2>
+            <form id="unitForm">
+                <div class="unit-portrait-frame">
+                    <img id="unitPortrait" src="" alt="Unit Portrait" width="512" height="512">
+                </div>
+                <div class="unit-info-frame">
+                    <label>Original Name: <input type="text" id="unitOriginalName" name="originalName" readonly></label><br>
+                    <label>Name: <input type="text" id="unitName" name="name"></label><br>
+                    <label>Cost: <input type="number" id="unitCost" name="cost" readonly></label><br>
+                </div>
+                <label>Description: <input type="text" id="unitDescription" name="description"></label><br>
+                <label>HP: <input type="number" id="unitHp" name="hp"></label><br>
+                <label>Max HP: <input type="number" id="unitMaxHp" name="maxHp"></label><br>
+                <label>Damage: <input type="text" id="unitDamage" name="damage"></label><br>
+                <label>Armor Piercing Damage: <input type="number" id="unitApDamage" name="apdamage"></label><br>
+                <label>Armor: <input type="number" id="unitArmor" name="armor"></label><br>
+                <label>Speed: <input type="number" id="unitSpeed" name="speed" step="0.1"></label><br>
+                <label>Range: <input type="number" id="unitRange" name="range"></label><br>
+                <label>Ammo: <input type="number" id="unitAmmo" name="ammo"></label><br>
+                <label>Morale: <input type="number" id="unitMorale" name="morale"></label><br>
+                <label>Max Morale: <input type="number" id="unitMaxMorale" name="maxMorale"></label><br>
+                <label>Orders: <input type="text" id="unitOrders" name="orders"></label><br>
+                <label>Category: 
+                    <select id="unitCategory" name="category">
+                        <option value="Infantry">Infantry</option>
+                        <option value="Range">Range</option>
+                        <option value="Cavalry">Cavalry</option>
+                        <option value="General">General</option>
+                    </select>
+                </label><br>
+                <label>Portrait: <input type="file" id="unitPortraitFile" name="portrait"></label><br>
+            </form>
+        </div>
+        <div class="column" id="actions-column">
+            <h2>Actions</h2>
+            <button type="button" id="saveButton">Save</button>
+            <button type="button" id="saveAsButton">Save As</button>
+            <button type="button" id="deleteButton">Delete</button>
+            <button type="button" id="validateButton">Validate</button>
+            <button type="button" id="infoButton">INFO</button>
+            <button type="button" id="goToBattleButton">GO TO BATTLE SIMULATION</button>
+        </div>
+    </div>
+    <script src="units.js"></script>
+    <script src="editorscripts.js"></script>
+</body>
+</html>

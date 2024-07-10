@@ -1,0 +1,257 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #2c2c2c;
+    color: #ffffff;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.editor-container {
+    width: 80%;
+    max-width: 1200px;
+    margin-top: 20px;
+    background-color: #1e1e1e;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #4CAF50;
+}
+
+.unit-list-container {
+    margin: 20px;
+    padding: 20px;
+    background-color: #333;
+    border-radius: 10px;
+    overflow-y: auto;
+    max-height: 400px;
+}
+
+.scrollable-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.scrollable-list li {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.scrollable-list li:hover {
+    background-color: #444;
+}
+
+.unit-details {
+    margin: 20px;
+    padding: 20px;
+    background-color: #333;
+    border-radius: 10px;
+}
+
+.unit-portrait-frame {
+    border: 2px solid #4CAF50;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+button {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #2c2c2c;
+    color: #ffffff;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main-container {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    max-width: 1200px;
+    margin-top: 20px;
+}
+
+.column {
+    width: 30%;
+    padding: 20px;
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    border: 2px solid #4CAF50;
+    overflow-y: auto;
+}
+
+.unit-list-container {
+    margin: 20px 0;
+    padding: 20px;
+    background-color: #333;
+    border-radius: 10px;
+    overflow-y: auto;
+    max-height: 400px;
+}
+
+.scrollable-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.scrollable-list li {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.scrollable-list li:hover, .scrollable-list .current-unit {
+    background-color: #444;
+}
+
+.unit-details {
+    margin: 20px;
+    padding: 20px;
+    background-color: #333;
+    border-radius: 10px;
+}
+
+.unit-portrait-frame {
+    border: 2px solid #4CAF50;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+button {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:active {
+    background-color: #45a049;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+body {
+    font-family: Arial, sans-serif;
+    background-color: #2c2c2c;
+    color: #ffffff;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main-container {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    max-width: 1200px;
+    margin-top: 20px;
+}
+
+.column {
+    width: 30%;
+    padding: 20px;
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    border: 2px solid #4CAF50;
+    overflow-y: auto;
+}
+
+.unit-list-container {
+    margin: 20px 0;
+    padding: 20px;
+    background-color: #333;
+    border-radius: 10px;
+    overflow-y: auto;
+    max-height: 400px;
+}
+
+.scrollable-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.scrollable-list li {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.scrollable-list li:hover, .scrollable-list .current-unit {
+    background-color: #444;
+}
+
+.unit-details {
+    margin: 20px;
+    padding: 20px;
+    background-color: #333;
+    border-radius: 10px;
+}
+
+.unit-portrait-frame {
+    border: 2px solid #4CAF50;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+button {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:active {
+    background-color: #45a049;
+}
+
+button:hover {
+    background-color: #45a049;
+}

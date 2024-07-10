@@ -3,10 +3,17 @@ body {
     background-color: #2c2c2c;
     color: #ffffff;
     text-align: center;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-#pre-battle {
-    margin: 20px;
+#pre-battle, #battle {
+    width: 80%;
+    max-width: 1200px;
+    margin-top: 20px;
 }
 
 .setup-section {
@@ -48,43 +55,70 @@ canvas {
     display: block;
     margin: 20px auto;
     background-color: #808080;
+    flex: 2;
+}
+
+#battle {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#battle-content {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+
+#unit-select-controls, #order-controls {
+    flex: 1;
+    padding: 20px;
+    background-color: #333;
+    border-radius: 10px;
+    margin: 0 10px;
+    text-align: center;
+}
+
+#unit-select-controls button, #order-controls button {
+    width: 100%;
+    margin: 5px 0;
+}
+
+#enemy-unit-details {
+    white-space: nowrap;
+    min-width: 200px;
 }
 
 #battle-controls {
     display: flex;
     justify-content: space-between;
-    margin: 20px;
+    width: 100%;
+    margin: 20px 0;
 }
 
 #player-controls, #enemy-controls {
-    width: 200px;
+    flex: 1;
     padding: 20px;
     background-color: #333;
     border-radius: 10px;
+    margin: 0 10px;
+    text-align: left; /* Align text to the left */
+}
+
+#player-controls {
+    margin-right: 20px; /* Add space between player controls and canvas */
+    margin-left: 50px; /* Add space between enemy controls and map */
+}
+
+#enemy-controls {
+    margin-right: 50px; 
+    margin-left: 50px;/* Add space between enemy controls and canvas */
 }
 
 #player-controls button, #enemy-controls button {
     width: 100%;
-}
-/* styles.css */
-
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-#pre-battle, #battle {
-    width: 80%;
-    max-width: 1200px;
-    margin-top: 20px;
-}
-
-.setup-section {
-    margin-bottom: 20px;
 }
 
 .unit-row {
@@ -96,9 +130,32 @@ body {
     border: 1px solid #000;
     padding: 10px;
     width: 22%;
+    height: 50%;
+    font-size: 14px; /* Adjust this as needed */
+    font-family: Arial, sans-serif; /* Set desired font family */
+    /*line-height: 1.25;*/
 }
 
 .unit-portrait {
     width: 100%;
     height: auto;
+}
+
+#player-setup, #enemy-setup {
+    background-size: cover;
+    min-width: 1200px; /* Increase as necessary to fit all slots */
+}
+
+#console-logs {
+    width: 100%;
+    height: 150px;
+    overflow-y: scroll;
+    background-color: #000;
+    color: #fff;
+    padding: 10px;
+    font-size: 12px; /* Adjust this as needed */
+    font-family: Arial, sans-serif; /* Set desired font family */
+    
+    margin-top: 20px; 
+    margin-bottom: 20px;/* Add space between enemy controls and canvas */
 }

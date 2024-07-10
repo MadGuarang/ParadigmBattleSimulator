@@ -7,26 +7,19 @@
     <link rel="stylesheet" href="styles.css">
     <script src="units.js"></script>
     <script src="scripts.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
 </head>
 <body>
     <div id="pre-battle">
         <h1>PARADIGM BATTLE SIMULATOR</h1>
-<div class="setup-section" id="battlefield-setup">
-    <h2>Battlefield Setup</h2>
-    <label>Width: <input type="number" id="battlefield-width" value="800"></label>
-    <label>Height: <input type="number" id="battlefield-height" value="800"></label>
-  
-    <label>Info detail in log console: <input type="number" id="loginfo-number" value="1"></label>
-    <label>Morale reward: <input type="number" id="moralereward-number" value="0.5"></label>
-</div>
-
         <div class="setup-section" id="player-setup">
             <h2>Player Setup</h2>
             <div id="summary">
                 <p id="player-summary"></p>
             </div>
-            <label>Health: <input type="number" id="player-morale" min="-9" max="90" value="1"> (X10%)</label>
-            <label>Ammo: <input type="number" id="player-army-size" min="-9" max="90" value="1"> (X10%)</label>
+            <label>Health: <input type="number" id="player-morale" min="-9" max="90" value="50"> (X10%)</label>
+            <label>Ammo: <input type="number" id="player-army-size" min="-9" max="90" value="50"> (X10%)</label>
             <div id="player-units" class="unit-row">
                 <!-- Unit slots will be generated here dynamically -->
             </div>
@@ -37,8 +30,8 @@
             <div id="summary">
                 <p id="enemy-summary"></p>
             </div>
-            <label>Health: <input type="number" id="enemy-morale" min="-9" max="90" value="1"> (X10%)</label>
-            <label>Ammo: <input type="number" id="enemy-army-size" min="-9" max="90" value="1"> (X10%)</label>
+            <label>Health: <input type="number" id="enemy-morale" min="-9" max="90" value="50"> (X10%)</label>
+            <label>Ammo: <input type="number" id="enemy-army-size" min="1" max="6000" value="50"> (X10%)</label>
             <div id="enemy-units" class="unit-row">
                 <!-- Unit slots will be generated here dynamically -->
             </div>
@@ -54,65 +47,51 @@
     </div>
     
     <div id="battle" style="display: none;">
-        <div id="battle-content">
+        <canvas id="battlefield" width="800" height="800"></canvas>
+        <div id="battle-controls">
+            
             <div id="player-controls">
                 <h2>Player Army</h2>
-                <div id="unit-status">
-                    <div>Total Units: <span id="player-total-units">0</span></div>
-                    <div>Player Alive: <span id="player-alive-counter">0</span></div>
-                    <div>Player Dead: <span id="player-dead-counter">0</span></div>
-                    <div id="player-unit-details"></div>
-                </div>
-                <div id="unit-orders">
-                    <h3>Unit Orders</h3>
-                    <div id="player-unit-orders"></div>
-                    <div id="selected-unit-type">Units chosen: None</div>
-                    <div id="selected-unit-order">Order chosen: None</div>
-                    <div id="enemy-unit-orders"></div>
-                </div>
-                <div id="battle-controls">
-                    <div id="unit-select-controls" style="width: 50%;">
-                        <h2>Select Units</h2>
-                        <button id="select-infantry">Infantry</button>
-                        <button id="select-range">Range</button>
-                        <button id="select-cavalry">Cavalry</button>
-                        <button id="select-general">General</button>
-                    </div>
-                    <div id="order-controls" style="width: 50%;">
-                        <h2>Army Orders</h2>
-                        <button id="select-attack">Attack</button>
-                        <button id="select-skirmish">Skirmish</button>
-                        <button id="select-defend">Hold</button>
-                        <button id="select-retreat">Fall back</button>
-                        <button id="select-follow">Follow leader</button>
-                        <button id="select-regroup">Regroup</button>
-                    </div>
-                </div>
-                <div style="text-align: center; margin-top: 20px;">
-                    <button id="pause-battle">Pause Simulation</button>
-                    <button id="resume-battle">Resume Simulation</button>
-                </div>
+                    
+<div id="unit-status">
+    <div>Player Alive: <span id="player-alive-counter"></span></div>
+    <div>Player Dead: <span id="player-dead-counter"></span></div>
+    
+</div>
+<div id="unit-orders">
+    <h3>Unit Orders</h3>
+    <div id="player-unit-orders"></div>
+    <div id="selected-unit-type">Units chosen: None</div>
+    <div id="selected-unit-order">Order chosen: None</div>
+    <div id="enemy-unit-orders"></div>
+</div>
+
+                <p id="player-info"></p>
+                <button id="select-infantry">Infantry</button>
+                <button id="select-range">Range</button>
+                <button id="select-cavalry">Cavalry</button>
+                <button id="select-general">General</button>
             </div>
-            <canvas id="battlefield" width="800" height="800"></canvas>
+            <div id="order-controls">
+                <h2>Army Orders</h2>
+                <p id="army-order"></p>
+                <button id="select-attack">Attack</button>
+                <button id="select-skirmish">Skirmish</button>
+                <button id="select-defend">Hold</button>
+                <button id="select-retreat">Fall back</button>
+                <button id="select-follow">Follow leader</button>
+                <button id="select-regroup">Regroup</button> <!-- Look for comrades -->
+            </div>
+            <button id="pause-battle">Pause Simulation</button>
+            <button id="resume-battle">Resume Simulation</button>
             <div id="enemy-controls">
                 <h2>Enemy Army</h2>
-                <div id="unit-status">
-                    <div>Total Units: <span id="enemy-total-units">0</span></div>
-                    <div>Enemy Alive: <span id="enemy-alive-counter">0</span></div>
-                    <div>Enemy Dead: <span id="enemy-dead-counter">0</span></div>
-                    <div id="enemy-unit-details" style="white-space: nowrap; min-width: 200px;"></div>
-                    <div id="console-logs" style="height: 200px; overflow-y: scroll; background: #222; color: #fff; padding: 10px;"></div>
-                </div>
+                <p id="enemy-info"></p>
+                <div>Enemy Alive: <span id="enemy-alive-counter"></span></div>
+    <div>Enemy Dead: <span id="enemy-dead-counter"></span></div>
             </div>
         </div>
     </div>
-    
-    
-
-    
-
-
-    
     <div id="help-popup" class="popup" style="display: none;">
         <h2>Help - Rules</h2>
         <p>This is a simple battle simulator. You have total freedom in setting up your and enemy army. You decide how many units, their types, and morale. Once setup is complete, click 'Start Battle' to begin the simulation.</p>
@@ -127,7 +106,6 @@
             <li>Use 'Pause Simulation' to halt the battle temporarily.</li>
             <li>The general's unit can be controlled manually using WSAD keys when in 'MANUAL' mode.</li>
         </ol>
-        <p>For more details, visit the <a href="help.html">Advanced Help</a> page.</p>
         <button id="close-help">Close</button>
     </div>
 
@@ -141,8 +119,12 @@
         </ul>
         <p>This simulator is a collaborative effort to demonstrate the potential of AI-driven projects. It's designed to be expandable, encouraging users to tweak and create their own units using the units.js file.</p>
         <p>The project also aims to showcase the beauty of mathematics in visual form, where moving units represent complex math equations, making them look alive.</p>
-        <p>For more details, visit the <a href="about.html">Advanced About</a> page.</p>
         <button id="close-about">Close</button>
     </div>
+    <script>
+        $(document).ready(function() {
+          $('#help-popup').load('assets/help/name-of-the-file.html');
+        });
+      </script>
 </body>
 </html>
